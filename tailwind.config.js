@@ -18,7 +18,7 @@ export default {
           300: '#5eead4',
           400: '#2dd4bf',
           500: '#14b8a6',
-          600: '#33c2a6', // Cor principal da PH Consultoria
+          600: '#33c2a6', // Cor extraída da logo PH Consultoria
           700: '#29a08a', 
           800: '#228371',
           900: '#1d6a5c',
