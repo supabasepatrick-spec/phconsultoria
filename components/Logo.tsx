@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface LogoProps {
   className?: string;
@@ -6,22 +6,36 @@ interface LogoProps {
 
 /**
  * Componente de Logo da PH Consultoria.
- * Renderiza o arquivo SVG oficial localizado em /assets/logo.svg.
+ * Tenta carregar o SVG oficial. Se falhar, renderiza o nome em texto estilizado.
  */
 export const Logo: React.FC<LogoProps> = ({ className }) => {
-  // Caminho absoluto para a sua logo dentro da pasta assets na raiz do portal.
+  const [hasError, setHasError] = useState(false);
+  
+  // Caminho absoluto começando com / é o mais seguro para SPAs
   const logoPath = "/assets/logo.svg";
+
+  // Se houver erro no carregamento da imagem, mostramos um fallback elegante em texto
+  if (hasError) {
+    return (
+      <div className={`flex items-center justify-center ${className || 'h-12'}`}>
+        <span className="text-primary-600 font-bold tracking-tight text-xl whitespace-nowrap">
+          PH <span className="text-gray-800">Consultoria</span>
+        </span>
+      </div>
+    );
+  }
 
   return (
     <img 
       src={logoPath} 
       alt="PH Consultoria" 
-      // Usamos object-contain para garantir que sua logo nunca seja distorcida.
-      // O mx-auto garante que ela fique centralizada nos containers de login e sidebar.
-      className={`object-contain block mx-auto ${className || 'h-12 w-auto'}`}
-      // Prioridade máxima de carregamento para a identidade visual.
+      // object-contain garante que a logo mantenha sua proporção original
+      className={`block mx-auto object-contain ${className || 'h-12 w-auto'}`}
       loading="eager"
-      decoding="async"
+      onError={() => {
+        console.warn("Logo não encontrada em: " + logoPath + ". Usando fallback de texto.");
+        setHasError(true);
+      }}
     />
   );
 };
