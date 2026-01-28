@@ -1,3 +1,4 @@
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -11,16 +12,16 @@ export default {
       },
       colors: {
         primary: {
-          50: '#fff1f2', // Rose 50
-          100: '#ffe4e6', // Rose 100
-          200: '#fecdd3',
-          300: '#fda4af',
-          400: '#fb7185',
-          500: '#f43f5e', // Rose 500
-          600: '#e11d48', // Rose 600 (Cor principal da marca - Botões)
-          700: '#be123c', // Rose 700 (Hover e Textos fortes)
-          800: '#9f1239',
-          900: '#881337',
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#33c2a6', // Cor principal da PH Consultoria
+          700: '#29a08a', 
+          800: '#228371',
+          900: '#1d6a5c',
         }
       },
       animation: {

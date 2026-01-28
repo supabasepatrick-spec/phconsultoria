@@ -9,8 +9,8 @@ interface SidebarProps {
   currentView: ViewState;
   onChangeView: (view: ViewState) => void;
   currentUser: User;
-  isOpen: boolean; // Novo prop para controle mobile
-  onClose: () => void; // Novo prop para fechar no mobile
+  isOpen: boolean; 
+  onClose: () => void; 
 }
 
 interface NavItem {
@@ -26,7 +26,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
   useEffect(() => {
     fetchUnreadNotifications();
     
-    // Realtime subscription for notifications
     const channel = supabase
       .channel('public:notifications')
       .on('postgres_changes', { 
@@ -55,25 +54,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
   };
 
   const getNavItems = (): NavItem[] => {
-    // Common items for everyone (Notifications)
-    // Dashboard label changes based on role
     const commonItems: NavItem[] = [
       { id: 'NOTIFICATIONS', label: 'Notificações', icon: Bell, badge: unreadCount },
     ];
 
     if (currentUser.role === 'USER') {
       return [
-        { id: 'DASHBOARD', label: 'Visão Geral', icon: LayoutDashboard }, // User Dashboard
+        { id: 'DASHBOARD', label: 'Visão Geral', icon: LayoutDashboard },
         ...commonItems,
         { id: 'MY_TICKETS', label: 'Meus Chamados', icon: List },
       ];
     }
 
-    // DEV / ADMIN Items
     return [
-      { id: 'DASHBOARD', label: 'Dashboard', icon: LayoutDashboard }, // Admin Dashboard (Graphs)
+      { id: 'DASHBOARD', label: 'Dashboard', icon: LayoutDashboard },
       ...commonItems,
-      { id: 'ALL_TICKETS', label: 'Todos os Chamados', icon: TicketIcon }, // Admin Ticket List
+      { id: 'ALL_TICKETS', label: 'Todos os Chamados', icon: TicketIcon },
       { id: 'USERS', label: 'Gestão de Usuários', icon: Users },
     ];
   };
@@ -82,25 +78,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
 
   const handleItemClick = (view: ViewState) => {
       onChangeView(view);
-      onClose(); // Fecha o menu ao clicar em um item (no mobile)
+      onClose();
   };
 
   return (
     <>
-        {/* Sidebar Container */}
         <div className={`
             fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col h-screen
             transform transition-transform duration-300 ease-in-out
             ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
             md:translate-x-0
         `}>
-        <div className="p-6 flex items-center justify-between border-b border-gray-100 h-20">
-            {/* LOGO COMPONENT */}
-            <div className="flex items-center space-x-2">
-                <Logo className="h-10 w-auto" />
-                <span className="text-xl font-bold text-gray-800 tracking-tight">AirService</span>
+        <div className="p-4 flex items-center justify-between border-b border-gray-100 h-20">
+            <div className="flex items-center space-x-2 overflow-hidden">
+                <Logo className="h-10 w-auto min-w-[40px]" />
+                <div className="flex flex-col">
+                  <span className="text-sm font-bold text-gray-800 leading-tight">Portal PH</span>
+                  <span className="text-[10px] font-medium text-primary-600 uppercase tracking-wider">Consultoria</span>
+                </div>
             </div>
-            {/* Mobile Close Button */}
             <button onClick={onClose} className="md:hidden text-gray-500 hover:text-gray-700">
                 <X size={24} />
             </button>
@@ -121,20 +117,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
             {navItems.map((item) => {
                 const Icon = item.icon;
-                
-                // Determine if this item is active
                 let isActive = currentView === item.id;
 
-                // Handle logic for Detail/Create/Edit views which are sub-views of the main lists
                 if (['TICKET_DETAIL', 'CREATE_TICKET', 'EDIT_TICKET'].includes(currentView)) {
-                    // For Admins, ticket details usually fall under "Todos os Chamados" context
-                    if (currentUser.role === 'ADMIN' && item.id === 'ALL_TICKETS') {
-                        isActive = true;
-                    }
-                    // For Users, ticket details fall under "Meus Chamados" context
-                    if (currentUser.role === 'USER' && item.id === 'MY_TICKETS') {
-                        isActive = true;
-                    }
+                    if (currentUser.role === 'ADMIN' && item.id === 'ALL_TICKETS') isActive = true;
+                    if (currentUser.role === 'USER' && item.id === 'MY_TICKETS') isActive = true;
                 }
                 
                 return (
@@ -152,7 +139,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
                         <span>{item.label}</span>
                     </div>
                     {item.badge ? (
-                        <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                        <span className="bg-primary-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                         {item.badge}
                         </span>
                     ) : null}
@@ -162,7 +149,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
         </nav>
         </div>
         
-        {/* Mobile Overlay */}
         {isOpen && (
             <div 
                 className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
