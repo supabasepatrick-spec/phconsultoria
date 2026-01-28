@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Lock, Mail, ArrowRight, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { supabase } from '../services/supabase';
@@ -92,8 +91,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           <div className="flex justify-center mb-4">
              <Logo className="h-24 w-full" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Portal PH Consultoria</h2>
-          <p className="text-gray-500 mt-1 text-sm">Acesse a central de suporte e consultoria técnica.</p>
+          <p className="text-gray-500 mt-2 text-sm font-medium">Acesse a central de suporte e consultoria técnica.</p>
         </div>
 
         {error && (

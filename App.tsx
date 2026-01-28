@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { TicketList } from './components/TicketList';
@@ -344,9 +343,8 @@ const App: React.FC = () => {
       <div className="md:hidden fixed top-0 left-0 w-full bg-white z-30 border-b border-gray-200 px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-3">
               <button onClick={() => setIsSidebarOpen(true)} className="p-1 text-gray-600 hover:bg-gray-100 rounded-lg"><Menu size={24} /></button>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center">
                  <Logo className="h-8 w-auto" />
-                 <span className="text-sm font-bold text-gray-800">Portal PH</span>
               </div>
           </div>
           <div className="h-8 w-8 rounded-full bg-primary-600 text-white flex items-center justify-center text-xs font-bold">{currentUser.name.charAt(0).toUpperCase()}</div>
