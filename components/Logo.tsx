@@ -6,16 +6,27 @@ interface LogoProps {
 
 /**
  * Componente de Logo da PH Consultoria.
- * Tenta carregar o SVG oficial. Se falhar, renderiza o nome em texto estilizado.
+ * 1. Tenta carregar /assets/logo.svg
+ * 2. Se falhar, tenta /assets/logo.png
+ * 3. Se ambos falharem, renderiza texto estilizado.
  */
 export const Logo: React.FC<LogoProps> = ({ className }) => {
-  const [hasError, setHasError] = useState(false);
+  const [sourceType, setSourceType] = useState<'svg' | 'png' | 'text'>('svg');
   
-  // Caminho absoluto começando com / é o mais seguro para SPAs
-  const logoPath = "/assets/logo.svg";
+  const svgPath = "/assets/logo.svg";
+  const pngPath = "/assets/logo.png";
 
-  // Se houver erro no carregamento da imagem, mostramos um fallback elegante em texto
-  if (hasError) {
+  const handleError = () => {
+    if (sourceType === 'svg') {
+      console.log("SVG não encontrado, tentando PNG...");
+      setSourceType('png');
+    } else if (sourceType === 'png') {
+      console.warn("Nenhuma imagem de logo encontrada em /assets/. Usando fallback de texto.");
+      setSourceType('text');
+    }
+  };
+
+  if (sourceType === 'text') {
     return (
       <div className={`flex items-center justify-center ${className || 'h-12'}`}>
         <span className="text-primary-600 font-bold tracking-tight text-xl whitespace-nowrap">
@@ -27,15 +38,11 @@ export const Logo: React.FC<LogoProps> = ({ className }) => {
 
   return (
     <img 
-      src={logoPath} 
+      src={sourceType === 'svg' ? svgPath : pngPath} 
       alt="PH Consultoria" 
-      // object-contain garante que a logo mantenha sua proporção original
       className={`block mx-auto object-contain ${className || 'h-12 w-auto'}`}
       loading="eager"
-      onError={() => {
-        console.warn("Logo não encontrada em: " + logoPath + ". Usando fallback de texto.");
-        setHasError(true);
-      }}
+      onError={handleError}
     />
   );
 };
