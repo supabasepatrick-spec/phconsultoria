@@ -90,14 +90,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
             md:translate-x-0
         `}>
         <div className="p-4 flex items-center justify-between border-b border-gray-100 h-20">
-            <div className="flex items-center space-x-2 overflow-hidden">
-                <Logo className="h-10 w-auto min-w-[40px]" />
-                <div className="flex flex-col">
-                  <span className="text-sm font-bold text-gray-800 leading-tight">Portal PH</span>
-                  <span className="text-[10px] font-medium text-primary-600 uppercase tracking-wider">Consultoria</span>
-                </div>
+            <div className="flex items-center w-full pr-2 overflow-hidden">
+                <Logo className="h-12 w-full" />
             </div>
-            <button onClick={onClose} className="md:hidden text-gray-500 hover:text-gray-700">
+            <button onClick={onClose} className="md:hidden text-gray-500 hover:text-gray-700 ml-2">
                 <X size={24} />
             </button>
         </div>
