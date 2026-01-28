@@ -89,11 +89,11 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md z-10 border border-gray-100">
         <div className="text-center mb-8">
-          <div className="flex justify-center mb-6">
-             <Logo className="h-16 w-auto" />
+          <div className="flex justify-center mb-4">
+             <Logo className="h-24 w-full" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900">Portal PH Consultoria</h2>
-          <p className="text-gray-500 mt-2 text-sm">Acesse a central de suporte e consultoria técnica.</p>
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Portal PH Consultoria</h2>
+          <p className="text-gray-500 mt-1 text-sm">Acesse a central de suporte e consultoria técnica.</p>
         </div>
 
         {error && (
@@ -113,28 +113,28 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
         {message && <div className="mb-4 p-3 bg-green-50 border border-green-100 text-green-600 text-sm rounded-lg">{message}</div>}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {isSignUp && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Nome Completo</label>
-                <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)} className="block w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-gray-900 sm:text-sm" placeholder="Ex: João Silva" />
+                <label className="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)} className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-gray-900 sm:text-sm" placeholder="Ex: João Silva" />
               </div>
           )}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">E-mail</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Mail className="h-5 w-5 text-gray-400" /></div>
-              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors outline-none text-gray-900 sm:text-sm" placeholder="seu@email.com" />
+              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 transition-colors outline-none text-gray-900 sm:text-sm" placeholder="seu@email.com" />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Senha</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Senha</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Lock className="h-5 w-5 text-gray-400" /></div>
-              <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-gray-900 sm:text-sm" placeholder="••••••••" minLength={6} />
+              <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-gray-900 sm:text-sm" placeholder="••••••••" minLength={6} />
             </div>
           </div>
-          <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none transition-all transform active:scale-95 disabled:opacity-70">
+          <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center py-2.5 px-4 border border-transparent rounded-lg shadow-md text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none transition-all transform active:scale-95 disabled:opacity-70">
             {isLoading ? <Loader2 className="animate-spin -ml-1 mr-2 h-4 w-4" /> : <>{isSignUp ? 'Criar Conta' : 'Entrar'}<ArrowRight className="ml-2 h-4 w-4" /></>}
           </button>
         </form>
