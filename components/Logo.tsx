@@ -6,22 +6,28 @@ interface LogoProps {
 
 /**
  * Componente de Logo da PH Consultoria.
- * 1. Tenta carregar /assets/logo.svg
- * 2. Se falhar, tenta /assets/logo.png
- * 3. Se ambos falharem, renderiza texto estilizado.
+ * Hierarquia de carregamento:
+ * 1. URL Remota (EdgeOne)
+ * 2. /assets/logo.svg (Local)
+ * 3. /assets/logo.png (Local)
+ * 4. Fallback de Texto Estilizado
  */
 export const Logo: React.FC<LogoProps> = ({ className }) => {
-  const [sourceType, setSourceType] = useState<'svg' | 'png' | 'text'>('svg');
+  const [sourceType, setSourceType] = useState<'remote' | 'svg' | 'png' | 'text'>('remote');
   
+  const remotePath = "https://remote-chocolate-3n8se9ejpd.edgeone.app/logo.png";
   const svgPath = "/assets/logo.svg";
   const pngPath = "/assets/logo.png";
 
   const handleError = () => {
-    if (sourceType === 'svg') {
-      console.log("SVG não encontrado, tentando PNG...");
+    if (sourceType === 'remote') {
+      console.log("Logo remota falhou, tentando SVG local...");
+      setSourceType('svg');
+    } else if (sourceType === 'svg') {
+      console.log("SVG local não encontrado, tentando PNG local...");
       setSourceType('png');
     } else if (sourceType === 'png') {
-      console.warn("Nenhuma imagem de logo encontrada em /assets/. Usando fallback de texto.");
+      console.warn("Nenhuma imagem de logo encontrada. Usando fallback de texto.");
       setSourceType('text');
     }
   };
@@ -36,11 +42,20 @@ export const Logo: React.FC<LogoProps> = ({ className }) => {
     );
   }
 
+  const getSrc = () => {
+    switch (sourceType) {
+      case 'remote': return remotePath;
+      case 'svg': return svgPath;
+      case 'png': return pngPath;
+      default: return '';
+    }
+  };
+
   return (
     <img 
-      src={sourceType === 'svg' ? svgPath : pngPath} 
+      src={getSrc()} 
       alt="PH Consultoria" 
-      className={`block mx-auto object-contain ${className || 'h-12 w-auto'}`}
+      className={`block mx-auto object-contain transition-opacity duration-300 ${className || 'h-12 w-auto'}`}
       loading="eager"
       onError={handleError}
     />
