@@ -7,7 +7,7 @@ interface LogoProps {
 /**
  * Componente de Logo da PH Consultoria.
  * Hierarquia de carregamento:
- * 1. URL Remota (EdgeOne)
+ * 1. URL Remota (Google Drive Direct Link)
  * 2. /assets/logo.svg (Local)
  * 3. /assets/logo.png (Local)
  * 4. Fallback de Texto Estilizado
@@ -15,7 +15,10 @@ interface LogoProps {
 export const Logo: React.FC<LogoProps> = ({ className }) => {
   const [sourceType, setSourceType] = useState<'remote' | 'svg' | 'png' | 'text'>('remote');
   
-  const remotePath = "https://remote-chocolate-3n8se9ejpd.edgeone.app/logo.png";
+  // Convertendo link de visualização do Drive para link direto de imagem
+  // ID do arquivo: 1KQTRzRWxSOjAjoL7janWnl_gkaFSBomI
+  const remotePath = "https://drive.google.com/uc?export=view&id=1KQTRzRWxSOjAjoL7janWnl_gkaFSBomI";
+  
   const svgPath = "/assets/logo.svg";
   const pngPath = "/assets/logo.png";
 
